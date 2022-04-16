@@ -9,12 +9,16 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  int counter = 5;
+  // int counter = 120;
   late Timer _timer;
   bool signal1 = true;
+  int signal1counter = 30;
   bool signal2 = false;
+  int signal2counter = 60;
+   bool signal4 = false;
+  int signal4counter = 90;
   bool signal3 = false;
-  bool signal4 = false;
+  int signal3counter = 120;
 
   @override
   void initState() {
@@ -27,37 +31,116 @@ class AppState extends State<App> {
   updateCounter() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       // You can also call here any function.
-      if (counter > 0) {
+      if (signal1counter > 0) {
         setState(() {
-          counter = --counter;
+          signal1counter = --signal1counter;
         });
       } else {
         setState(() {
-          counter = 5;
           if (signal1 == true) {
             setState(() {
               signal1 = false;
               signal2 = true;
+              if (signal1 == true) {
+                signal1counter = 30;
+              } else if (signal2 == true) {
+                signal1counter = 120;
+              } else if (signal4 == true) {
+                signal1counter = 90;
+              } else if (signal3 == true) {
+                signal1counter = 60;
+              }
             });
-          } else if (signal2 == true) {
+          }
+          // else if (signal2 == true) {
+          //   setState(() {
+          //     signal2 = false;
+          //     signal4 = true;
+          //   });
+          // } else if (signal4 == true) {
+          //   signal4 = false;
+          //   signal3 = true;
+          // } else {
+          //   signal3 = false;
+          //   signal1 = true;
+          // }
+        });
+      }
+
+      if (signal2counter > 0) {
+        setState(() {
+          signal2counter = --signal2counter;
+        });
+      } else {
+        setState(() {
+          if (signal2 == true) {
             setState(() {
               signal2 = false;
               signal4 = true;
+              if (signal2 == true) {
+                signal2counter = 30;
+              } else if (signal4 == true) {
+                signal2counter = 120;
+              } else if (signal3 == true) {
+                signal2counter = 90;
+              } else if (signal1 == true) {
+                signal2counter = 60;
+              }
             });
-          } else if (signal4 == true) {
-            signal4 = false;
-            signal3 = true;
-          } else {
-            signal3 = false;
-            signal1 = true;
+          }
+        });
+      }
+
+      if (signal4counter > 0) {
+        setState(() {
+          signal4counter = --signal4counter;
+        });
+      } else {
+        setState(() {
+          if (signal4 == true) {
+            setState(() {
+              signal4 = false;
+              
+              signal3 = true;
+              if (signal4 == true) {
+                signal4counter = 30;
+              } else if (signal3 == true) {
+                signal4counter = 120;
+              } else if (signal1 == true) {
+                signal4counter = 90;
+              } else if (signal2 == true) {
+                signal4counter = 60;
+              }
+            });
+          }
+        });
+      }
+
+      if (signal3counter > 0) {
+        setState(() {
+          signal3counter = --signal3counter;
+        });
+      } else {
+        setState(() {
+          if (signal3 == true) {
+            setState(() {
+              signal3 = false;
+              
+              signal1 = true;
+              if (signal3 == true) {
+                signal3counter = 30;
+              } else if (signal1 == true) {
+                signal3counter = 120;
+              } else if (signal2 == true) {
+                signal3counter = 90;
+              } else if (signal4 == true) {
+                signal3counter = 60;
+              }
+            });
           }
         });
       }
     });
-  }
-
-  stopCounter() {
-    _timer.cancel();
   }
 
   @override
@@ -78,7 +161,15 @@ class AppState extends State<App> {
                           child: Container(
                             height: 50,
                             width: 50,
-                            color: signal1 ? Colors.green : Colors.red,
+                            color: signal1counter<=5 ? Colors.orange: signal1 ? Colors.green : Colors.red,
+                            child: Center(
+                              child: Text(
+                                '$signal1counter',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -90,7 +181,15 @@ class AppState extends State<App> {
                           child: Container(
                             height: 50,
                             width: 50,
-                            color: signal2 ? Colors.green : Colors.red,
+                            color: signal2counter<=5 ? Colors.orange: signal2 ? Colors.green : Colors.red,
+                            child: Center(
+                              child: Text(
+                                '$signal2counter',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -108,7 +207,15 @@ class AppState extends State<App> {
                           child: Container(
                             height: 50,
                             width: 50,
-                            color: signal3 ? Colors.green : Colors.red,
+                            color: signal3counter<=5 ? Colors.orange: signal3 ? Colors.green : Colors.red,
+                            child: Center(
+                              child: Text(
+                                '$signal3counter',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -120,7 +227,15 @@ class AppState extends State<App> {
                           child: Container(
                             height: 50,
                             width: 50,
-                            color: signal4 ? Colors.green : Colors.red,
+                            color: signal4counter<=5 ? Colors.orange: signal4 ? Colors.green : Colors.red,
+                            child: Center(
+                              child: Text(
+                                '$signal4counter',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -129,104 +244,9 @@ class AppState extends State<App> {
                 ),
               ),
             ],
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.yellowAccent,
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-              ),
-              height: 50,
-              width: 50,
-              child: Center(
-                child: Text(
-                  '$counter',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            // TweenAnimationBuilder<Duration>(
-            //     onEnd: () {
-            //       // setState(() {
-            //       //   second = 10;
-            //       // });
-            //       // _animationController.forward();
-
-            //       if (signal1 == true) {
-            //         setState(() {
-            //           // endDuration = const Duration(seconds: 10);
-
-            //           second = const Duration(seconds: 10);
-            //           signal1 = false;
-            //           signal2 = true;
-            //         });
-            //       } else if (signal2 == true) {
-            //         setState(() {
-            //           second = const Duration(seconds: 10);
-
-            //           signal2 = false;
-            //           signal3 = true;
-            //         });
-            //       } else if (signal3 == true) {
-            //         signal3 = false;
-            //         signal4 = true;
-            //       }
-            //     },
-            //     duration: second,
-            //     tween: Tween(begin: endDuration, end: second),
-            //     builder:
-            //         (BuildContext context, Duration second, Widget? child) {
-            //       // final hour = value.inHours;
-
-            //       final minutes = second.inMinutes % 60;
-            //       final seconds = second.inSeconds % 60;
-
-            //       return Center(
-            //           child: Text(
-            //         '$minutes:$seconds',
-            //         textAlign: TextAlign.center,
-            //         style: const TextStyle(fontWeight: FontWeight.bold),
-            //       ));
-            //     }),
-            // )
-          ),
+          ),         
         ],
       ),
-//     );
-      //     Center(
-      //         child: Column(children: <Widget>[
-      //   Container(
-      //       padding: EdgeInsets.fromLTRB(18, 18, 18, 18),
-      //       child: Text('$counter', style: TextStyle(fontSize: 100))),
-      //   Container(
-      //       margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-      //       child: RaisedButton(
-      //         onPressed: () => updateCounter(),
-      //         child: Text(
-      //           'Click Here To Call A Recurring Function in Flutter',
-      //           style: TextStyle(fontSize: 24),
-      //           textAlign: TextAlign.center,
-      //         ),
-      //         textColor: Colors.white,
-      //         color: Colors.green,
-      //         padding: EdgeInsets.fromLTRB(11, 11, 11, 11),
-      //       )),
-      //   Container(
-      //       margin: const EdgeInsets.fromLTRB(10, 30, 10, 0),
-      //       child: RaisedButton(
-      //         onPressed: () => stopCounter(),
-      //         child: Text(
-      //           'Click Here To Stop Recurring Function From Calling',
-      //           style: TextStyle(fontSize: 24),
-      //           textAlign: TextAlign.center,
-      //         ),
-      //         textColor: Colors.white,
-      //         color: Colors.green,
-      //         padding: EdgeInsets.fromLTRB(11, 11, 11, 11),
-      //       )),
-      // ]))
     );
   }
 }
